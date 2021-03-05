@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>设计模式Facade-Mediator | FlrPG</title>
-  <meta name="keywords" content=" dp ">
-  <meta name="description" content="设计模式Facade-Mediator | FlrPG">
+  <title>Redis说明 | FlrPG</title>
+  <meta name="keywords" content=" redis ">
+  <meta name="description" content="Redis说明 | FlrPG">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="404">
@@ -357,9 +357,9 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-dp/dp04Facade-Mediator" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-db/db-redis-002" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">设计模式Facade-Mediator</h1>
+        <h1 class="article-title">Redis说明</h1>
     
     <div class="article-meta">
         
@@ -369,9 +369,7 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="开发知识">开发知识</a> > 
-            
-            <a  data-rel="开发知识&lt;---&gt;设计模式">设计模式</a>
+            <a  data-rel="数据库">数据库</a>
             
         </span>
         
@@ -379,19 +377,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color3">dp</a>
+            <a class="color1">redis</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2020-11-24 13:49:04'>2020-11-24 13:46</time>
+            发布时间 : <time class="date" title='最后更新: 2021-01-15 09:52:29'>2021-01-13 10:54</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:0</span>
+        <span>字数:424</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -421,7 +419,7 @@
     
     <div class="toc-ref">
     
-        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B-%EF%BC%88DEL-KEYNAME%EF%BC%89"><span class="toc-text">数据类型 （DEL KEYNAME）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%91%BD%E4%BB%A4"><span class="toc-text">Redis 命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85"><span class="toc-text">Redis 发布订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E4%BA%8B%E5%8A%A1"><span class="toc-text">Redis事务</span></a></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -437,7 +435,75 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="数据类型-（DEL-KEYNAME）"><a href="#数据类型-（DEL-KEYNAME）" class="headerlink" title="数据类型 （DEL KEYNAME）"></a>数据类型 （DEL KEYNAME）</h2><table>
+<thead>
+<tr>
+<th align="left">类型</th>
+<th align="left">特性</th>
+<th align="left">实例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">String</td>
+<td align="left">二进制安全，最大存储512M，<br>String的key为任意类型（图片|序列化对象）</td>
+<td align="left">127.0.0.1:0&gt;set STRK aa<br>“OK”<br>127.0.0.1:0&gt;get STRK<br>“aa”</td>
+</tr>
+<tr>
+<td align="left">Hash</td>
+<td align="left">键值对集合，适合存储对象</td>
+<td align="left">127.0.0.1:0&gt;hmset MAPK name “ZS”<br>“OK”<br>127.0.0.1:0&gt;hmget MAPK name<br> 1)  “ZS”</td>
+</tr>
+<tr>
+<td align="left">List</td>
+<td align="left">双向链表，提供了在头尾操作的api</td>
+<td align="left">127.0.0.1:0&gt;lpush LISTK aa<br>“1”<br>127.0.0.1:0&gt;lpush LISTK bb<br>“2”<br>127.0.0.1:0&gt;lrange LISTK 0 10<br> 1)  “bb”<br> 2)  “aa”<br>应用场景：消息队列</td>
+</tr>
+<tr>
+<td align="left">Set</td>
+<td align="left">无序集合</td>
+<td align="left">127.0.0.1:0&gt;sadd SETK aa<br>“1”<br>127.0.0.1:0&gt;sadd SETK bb<br>“1”<br>127.0.0.1:0&gt;sadd SETK aa<br>“0”<br>127.0.0.1:0&gt;smembers SETK<br> 1)  “aa”<br> 2)  “bb”</td>
+</tr>
+<tr>
+<td align="left">zset</td>
+<td align="left">加权重无序集合<br>zrange 取索引区间值<br>zrevrange 去权重区间值</td>
+<td align="left">127.0.0.1:0&gt;zadd SETK 0 aa 1 aa 0 bb<br>“2”<br>127.0.0.1:0&gt;zrange ZSETK 0 10<br> 1)  “bb”<br> 2)  “aa”<br>127.0.0.1:0&gt;zrevrange ZSETK 0 0<br> 1)  “aa”</td>
+</tr>
+</tbody></table>
+<h2 id="Redis-命令"><a href="#Redis-命令" class="headerlink" title="Redis 命令"></a>Redis 命令</h2><blockquote>
+<p>redis-cli  -h  host  -p  port  -a  password</p>
+</blockquote>
+<h2 id="Redis-发布订阅"><a href="#Redis-发布订阅" class="headerlink" title="Redis 发布订阅"></a>Redis 发布订阅</h2><blockquote>
+<p>SUBSCRIBE channel channel      订阅给定的一个或多个频道的信息<br>PUBLISH channel message         将信息发送到指定的频道。</p>
+</blockquote>
+<ol>
+<li>redis-cli 创建两个客户端链接（cli1，cli2）</li>
+<li>cli1&gt;subscribe channelTest    (cli1订阅channelTest频道信息)</li>
+<li>cli2&gt;publish channelTest hello    （cli2向channelTest频道发布 “<strong>hello</strong>” 消息）</li>
+<li>cli1 接收消息效果<ol>
+<li>“message”</li>
+<li>“channelTest”</li>
+<li>“hello”</li>
+</ol>
+</li>
+</ol>
+<h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><blockquote>
+<p>MULT    标记一个事务块的开始</p>
+<p>EXEC    执行所有事务块内的命令</p>
+</blockquote>
+<pre><code class="terminal">127.0.0.1:6379&gt; multi
+OK
+127.0.0.1:6379&gt; set STRK multi
+QUEUED
+127.0.0.1:6379&gt; get STRK
+QUEUED
+127.0.0.1:6379&gt; exec
+1) OK
+2) &quot;multi&quot;</code></pre>
+<p>Java中使用</p>
+<ul>
+<li>Jedis</li>
+</ul>
+
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1561250568@qq.com </span>
     </div>
