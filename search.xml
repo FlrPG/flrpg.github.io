@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>JVM_000</title>
+      <link href="2021/03/05/JVM-000/"/>
+      <url>2021/03/05/JVM-000/</url>
+      
+        <content type="html"><![CDATA[<p>![截屏2021-02-24 下午5.48.17](JVM-000/截屏2021-02-24 下午5.48.17-4924913.png)</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> tag1 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>db-db2-001</title>
+      <link href="2021/02/04/db/db-db2-001/"/>
+      <url>2021/02/04/db/db-db2-001/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> tag1 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>OS-mac-001</title>
+      <link href="2021/01/27/os/OS-mac-001/"/>
+      <url>2021/01/27/os/OS-mac-001/</url>
+      
+        <content type="html"><![CDATA[<p>机械革命</p><h3 id="1-begin"><a href="#1-begin" class="headerlink" title="1.begin"></a>1.begin</h3><ol><li><a href="https://blog.daliansky.net/">macOS 镜像</a></li><li><a href="https://balena.io/etcher/">balenaEtcher</a></li><li><a href="https://starbeat.kirainmoe.com/">工具箱配置文件</a></li><li><a href="http://diskgenius.cn/">DiskGenius分区助手</a></li></ol><p>Windows内 文件 md5值 检验</p><blockquote><p>certutil -hashfile “macOS Big Sur 11.1 20C69 Installer for CLOVER 5127 and WEPE.dmg” MD5</p></blockquote>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> os </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Jpa</title>
+      <link href="2021/01/19/db/db-jpa-001/"/>
+      <url>2021/01/19/db/db-jpa-001/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Jpa </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>plan-2021</title>
+      <link href="2021/01/15/plan/plan-2021/"/>
+      <url>2021/01/15/plan/plan-2021/</url>
+      
+        <content type="html"><![CDATA[<h2 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h2><ul><li><input disabled="" type="checkbox"> JUC</li><li><input disabled="" type="checkbox"> JVM</li><li><input disabled="" type="checkbox"> dp</li><li><input disabled="" type="checkbox"> alg</li><li><input disabled="" type="checkbox"> redis</li><li><input disabled="" type="checkbox"> source-spring</li></ul><h3 id="JAN"><a href="#JAN" class="headerlink" title="JAN"></a>JAN</h3><p>dp</p><ol><li></li></ol><pre><code class="流程图">graph TDA[方形] --&gt; B(圆角)    B --&gt; C&#123;条件a&#125;    C --&gt; |a=1| D[结果1]    C --&gt; |a=2| E[结果2]    F[竖向流程图]graph LRA[方形] --&gt;B(圆角)    B --&gt; C&#123;条件a&#125;    C --&gt;|a=1| D[结果1]    C --&gt;|a=2| E[结果2]    F[横向流程图]</code></pre><pre class="mermaid">graph TDA[方形] --> B(圆角)    B --> C{条件a}    C --> |a=1| D[结果1]    C --> |a=2| E[结果2]    F[竖向流程图]</pre><pre class="mermaid">graph LRA[方形] -->B(圆角)    B --> C{条件a}    C -->|a=1| D[结果1]    C -->|a=2| E[结果2]    F[横向流程图]</pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> plan </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Redis说明</title>
+      <link href="2021/01/13/db/db-redis-002/"/>
+      <url>2021/01/13/db/db-redis-002/</url>
+      
+        <content type="html"><![CDATA[<h2 id="数据类型-（DEL-KEYNAME）"><a href="#数据类型-（DEL-KEYNAME）" class="headerlink" title="数据类型 （DEL KEYNAME）"></a>数据类型 （DEL KEYNAME）</h2><table><thead><tr><th align="left">类型</th><th align="left">特性</th><th align="left">实例</th></tr></thead><tbody><tr><td align="left">String</td><td align="left">二进制安全，最大存储512M，<br />String的key为任意类型（图片|序列化对象）</td><td align="left">127.0.0.1:0&gt;set STRK aa<br />“OK”<br />127.0.0.1:0&gt;get STRK<br />“aa”</td></tr><tr><td align="left">Hash</td><td align="left">键值对集合，适合存储对象</td><td align="left">127.0.0.1:0&gt;hmset MAPK name “ZS”<br/>“OK”<br/>127.0.0.1:0&gt;hmget MAPK name<br/> 1)  “ZS”</td></tr><tr><td align="left">List</td><td align="left">双向链表，提供了在头尾操作的api</td><td align="left">127.0.0.1:0&gt;lpush LISTK aa<br/>“1”<br/>127.0.0.1:0&gt;lpush LISTK bb<br/>“2”<br/>127.0.0.1:0&gt;lrange LISTK 0 10<br/> 1)  “bb”<br/> 2)  “aa”<br />应用场景：消息队列</td></tr><tr><td align="left">Set</td><td align="left">无序集合</td><td align="left">127.0.0.1:0&gt;sadd SETK aa<br/>“1”<br/>127.0.0.1:0&gt;sadd SETK bb<br/>“1”<br/>127.0.0.1:0&gt;sadd SETK aa<br/>“0”<br/>127.0.0.1:0&gt;smembers SETK<br/> 1)  “aa”<br/> 2)  “bb”</td></tr><tr><td align="left">zset</td><td align="left">加权重无序集合<br />zrange 取索引区间值<br />zrevrange 去权重区间值</td><td align="left">127.0.0.1:0&gt;zadd SETK 0 aa 1 aa 0 bb<br/>“2”<br/>127.0.0.1:0&gt;zrange ZSETK 0 10<br/> 1)  “bb”<br/> 2)  “aa”<br/>127.0.0.1:0&gt;zrevrange ZSETK 0 0<br/> 1)  “aa”</td></tr></tbody></table><h2 id="Redis-命令"><a href="#Redis-命令" class="headerlink" title="Redis 命令"></a>Redis 命令</h2><blockquote><p>redis-cli  -h  host  -p  port  -a  password</p></blockquote><h2 id="Redis-发布订阅"><a href="#Redis-发布订阅" class="headerlink" title="Redis 发布订阅"></a>Redis 发布订阅</h2><blockquote><p>SUBSCRIBE channel channel      订阅给定的一个或多个频道的信息<br>PUBLISH channel message         将信息发送到指定的频道。</p></blockquote><ol><li>redis-cli 创建两个客户端链接（cli1，cli2）</li><li>cli1&gt;subscribe channelTest    (cli1订阅channelTest频道信息)</li><li>cli2&gt;publish channelTest hello    （cli2向channelTest频道发布 “<strong>hello</strong>” 消息）</li><li>cli1 接收消息效果<ol><li>“message”</li><li>“channelTest”</li><li>“hello”</li></ol></li></ol><h2 id="Redis事务"><a href="#Redis事务" class="headerlink" title="Redis事务"></a>Redis事务</h2><blockquote><p>MULT    标记一个事务块的开始</p><p>EXEC    执行所有事务块内的命令</p></blockquote><pre><code class="terminal">127.0.0.1:6379&gt; multiOK127.0.0.1:6379&gt; set STRK multiQUEUED127.0.0.1:6379&gt; get STRKQUEUED127.0.0.1:6379&gt; exec1) OK2) &quot;multi&quot;</code></pre><p>Java中使用</p><ul><li>Jedis</li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Redis-分布式锁应用（基于 redisson）</title>
+      <link href="2021/01/08/db/db-redis-001/"/>
+      <url>2021/01/08/db/db-redis-001/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Maven依赖（github地址-https-github-com-redisson-redisson-）："><a href="#Maven依赖（github地址-https-github-com-redisson-redisson-）：" class="headerlink" title="Maven依赖（github地址 https://github.com/redisson/redisson/）："></a>Maven依赖（github地址 <a href="https://github.com/redisson/redisson/%EF%BC%89%EF%BC%9A">https://github.com/redisson/redisson/）：</a></h2><pre><code class="xml">        &lt;dependency&gt;            &lt;groupId&gt;org.redisson&lt;/groupId&gt;            &lt;artifactId&gt;redisson&lt;/artifactId&gt;            &lt;version&gt;3.14.1&lt;/version&gt;        &lt;/dependency&gt;</code></pre><h2 id="application-yml-配置："><a href="#application-yml-配置：" class="headerlink" title="application.yml 配置："></a>application.yml 配置：</h2><pre><code class="yaml">singleServerConfig:  timeout: 1000000  password: redis  address: &quot;redis://127.0.0.1:6379&quot;</code></pre><h2 id="示例代码："><a href="#示例代码：" class="headerlink" title="示例代码："></a>示例代码：</h2><ol><li><p>RedissonClient 实例创建：</p><pre><code class="java">    @Value(&quot;$&#123;singleServerConfig.timeout&#125;&quot;)    private int timeout;    @Value(&quot;$&#123;singleServerConfig.password&#125;&quot;)    private String password;    @Value(&quot;$&#123;singleServerConfig.address&#125;&quot;)    private String address;    private RedissonClient redisson = null;    @PostConstruct    private void init() &#123;        Config config = new Config();        config.useSingleServer()                .setTimeout(timeout)                .setPassword(password)                .setAddress(address);        redisson = Redisson.create(config);    &#125;</code></pre></li><li><p>简单使用：</p><pre><code class="java">    @Override    @Transactional    public TableRecord getTableInfo(String sjbspch, String tableName, String ext) &#123;        RLock lock = redisson.getLock(&quot;REDIS_LOCK&quot;);        lock.lock();        TableRecord currentRecord = null;        try &#123;            //业务逻辑。。。。。。。。。        &#125; catch (Exception e) &#123;            System.out.println(&quot;error...&quot;);        &#125; finally &#123;            lock.unlock();        &#125;        return currentRecord;    &#125;</code></pre></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 数据库 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> redis </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>线程池创建-中止</title>
+      <link href="2020/12/22/issue/issue001/"/>
+      <url>2020/12/22/issue/issue001/</url>
+      
+        <content type="html"><![CDATA[<p>依赖</p><pre><code class="xml">&lt;dependency&gt;            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;            &lt;version&gt;5.5.2&lt;/version&gt;&lt;/dependency&gt;</code></pre><p>示例</p><pre><code class="java">private static void test5ThreadDown() &#123;        int polGroupCount = 29999;        int polPersonCount = 51000;        int gSize = 8, pSize = 2;        int gCount = polGroupCount / gSize, pCount = polPersonCount / pSize;        //创建线程池        ExecutorService service = ThreadUtil.newExecutor(gSize + pSize);        for (int i = 0; i &lt; gSize; i++) &#123;            int startIndex = i * gCount;            int endIndex = i * gCount + gCount;            if (i == gSize - 1) &#123;                endIndex = polGroupCount;            &#125;            if (startIndex == endIndex) &#123;                continue;            &#125;            int finalEndIndex = endIndex;            service.submit(() -&gt; &#123;                try &#123;                    System.out.println(&quot;startIndex: &quot; + startIndex + &quot; endIndex: &quot; + finalEndIndex);                    for (int j = 0; j &lt; 5; j++) &#123;                        ThreadUtil.safeSleep(1000);                        System.out.println(Thread.currentThread().getName() + &quot;--j--&quot; + j);                    &#125;                    System.out.println(Thread.currentThread().getName() + &quot;-end......&quot;);                &#125; catch (Exception e) &#123;                    System.out.println(e.getMessage());                &#125;            &#125;);        &#125;        //线程池        service.shutdown();        while (true) &#123;            if (service.isTerminated()) &#123;                //当所有任务执行结束完成后，return true                System.out.println(&quot;线程都结束勒。。。&quot;);                break;            &#125;            ThreadUtil.safeSleep(1000);        &#125;        System.out.println(&quot;endAll==================&quot;);    &#125;</code></pre>]]></content>
+      
+      
+      <categories>
+          
+          <category> 问题集 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> issue </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>jvm-class-loading</title>
+      <link href="2020/12/22/jvm/jvm01/"/>
+      <url>2020/12/22/jvm/jvm01/</url>
+      
+        <content type="html"><![CDATA[<h2 id="类加载-初始化："><a href="#类加载-初始化：" class="headerlink" title="类加载-初始化："></a>类加载-初始化：</h2><ol><li>Loading <ul><li>双亲委派</li><li>LazyLoading</li><li>ClassLoader源码</li><li>自定义类加载器</li><li>混合执行 编译执行 解释执行</li></ul></li><li>Linking<ol><li>Verifivation（校验文件是否符合JVM规定）</li><li>Perparation（！！！class 静态变量赋默认值）</li><li>Resolution（常量池的各种符号引用解析为指针、偏移量等内存地址的直接引用）</li></ol></li><li>Initializing（调用类初始化代码，静态变量赋初值）</li></ol><h3 id="类加载器（父加载器不是继承关系）"><a href="#类加载器（父加载器不是继承关系）" class="headerlink" title="类加载器（父加载器不是继承关系）"></a>类加载器（父加载器不是继承关系）</h3><table><thead><tr><th>JVM按需动态加载<br />采用双亲委派机制</th><th>类加载器</th><th>– 自顶向下进行实际查找和加载child方向</th></tr></thead><tbody><tr><td></td><td>Bootstrap</td><td>加载lib、rt.jar chartset.jar 核心类，C++实现</td></tr><tr><td></td><td>Extension</td><td>加载扩展jar包 jre/lib/ext/*.jar，或由-Djava.ext.dirs指定</td></tr><tr><td></td><td>App</td><td>加载classpath指定内容</td></tr><tr><td>自底向上检查<br />该类是否已经<br />加载parent方向</td><td>CustomClassLoader</td><td>自定义的ClassLoader</td></tr></tbody></table><h3 id="双亲委派机制（安全）"><a href="#双亲委派机制（安全）" class="headerlink" title="双亲委派机制（安全）"></a>双亲委派机制（安全）</h3><ul><li><p>父加载器</p><blockquote><p>父加载器不是类“类加载器的加载器”。也不是“类加载器的父类加载器”</p></blockquote></li><li><p>类加载器的范围</p><blockquote><p>Launcher源码</p></blockquote></li><li><p>双亲委派打破的问题</p><ol><li>如何打破？重写ClassLoader中 loadClass 方法</li><li>何时打破？<ul><li>JDK1.2之前自定义CLassLoader都必须重写loadClass</li><li>当前线程内指定ClassLoader，thread.setContextClassLoader</li><li>热启动，热部署 osgi、tomcat，可以加载不同版本的代码。</li></ul></li></ol></li></ul><h3 id="ClassLoader源码"><a href="#ClassLoader源码" class="headerlink" title="ClassLoader源码"></a>ClassLoader源码</h3><blockquote><p>loadClass（）方法</p></blockquote><pre><code class="java">private final ClassLoader parent; //源码内不可修改</code></pre><h2 id="类加载-初始化：-1"><a href="#类加载-初始化：-1" class="headerlink" title="类加载-初始化："></a>类加载-初始化：</h2><ol><li>Loading <ul><li>双亲委派</li><li>LazyLoading</li><li>ClassLoader源码</li><li>自定义类加载器</li><li>混合执行 编译执行 解释执行</li></ul></li><li>Linking<ol><li>Verifivation（校验文件是否符合JVM规定）</li><li>Perparation（！！！class 静态变量赋默认值）</li><li>Resolution（常量池的各种符号引用解析为指针、偏移量等内存地址的直接引用）</li></ol></li><li>Initializing（调用类初始化代码，静态变量赋初值）</li></ol><h3 id="类加载器（父加载器不是继承关系）-1"><a href="#类加载器（父加载器不是继承关系）-1" class="headerlink" title="类加载器（父加载器不是继承关系）"></a>类加载器（父加载器不是继承关系）</h3><table><thead><tr><th>JVM按需动态加载<br />采用双亲委派机制</th><th>类加载器</th><th>– 自顶向下进行实际查找和加载child方向</th></tr></thead><tbody><tr><td></td><td>Bootstrap</td><td>加载lib、rt.jar chartset.jar 核心类，C++实现</td></tr><tr><td></td><td>Extension</td><td>加载扩展jar包 jre/lib/ext/*.jar，或由-Djava.ext.dirs指定</td></tr><tr><td></td><td>App</td><td>加载classpath指定内容</td></tr><tr><td>自底向上检查<br />该类是否已经<br />加载parent方向</td><td>CustomClassLoader</td><td>自定义的ClassLoader</td></tr></tbody></table><h3 id="双亲委派机制（安全）-1"><a href="#双亲委派机制（安全）-1" class="headerlink" title="双亲委派机制（安全）"></a>双亲委派机制（安全）</h3><ul><li><p>父加载器</p><blockquote><p>父加载器不是类“类加载器的加载器”。也不是“类加载器的父类加载器”</p></blockquote></li><li><p>类加载器的范围</p><blockquote><p>Launcher源码</p></blockquote></li><li><p>双亲委派打破的问题</p><ol><li>如何打破？重写ClassLoader中 loadClass 方法</li><li>何时打破？<ul><li>JDK1.2之前自定义CLassLoader都必须重写loadClass</li><li>当前线程内指定ClassLoader，thread.setContextClassLoader</li><li>热启动，热部署 osgi、tomcat，可以加载不同版本的代码。</li></ul></li></ol></li></ul><h3 id="ClassLoader源码-1"><a href="#ClassLoader源码-1" class="headerlink" title="ClassLoader源码"></a>ClassLoader源码</h3><blockquote><p>loadClass（）方法</p></blockquote><pre><code class="java">private final ClassLoader parent; //源码内不可修改</code></pre><p>![截屏2021-02-24 下午5.48.17](jvm01/截屏2021-02-24 下午5.48.17.png)</p><h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><ul><li><p>继承ClassLoader</p></li><li><p>重写模板方法findClass（）</p><ul><li>调用defineClass</li></ul></li><li><p>自定义类加载器加载自加密的class</p><ul><li>防止反编译</li><li>防止篡改</li></ul></li></ul><h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><ul><li>解释器 - bytecode intepreter</li><li>JIT - Just In-Time compiler</li><li>混合模式</li></ul><blockquote><p>-Xmixed 默认混合模式。开始解释执行，启动较快，对热点代码实行检测和编译</p><p>-Xint 纯解释模式。启动快，执行慢</p><p>-Xcomp 纯编译模式，执行快，启动慢</p></blockquote><ul><li>检测热点代码：-XX:CompileThreshold = 10000</li></ul><h3 id="懒加载LazyLoading"><a href="#懒加载LazyLoading" class="headerlink" title="懒加载LazyLoading"></a>懒加载LazyLoading</h3><ul><li>JVM规范没有规定何时加载</li><li>严格规定何时需要初始化</li><li>加载场景<ul><li>new getstatic putstatic invokestatic指令，访问final 变量除外</li><li>java.lang.reflect 对类进行反射调用</li><li>初始化类的子类时，父类先加载</li><li>虚拟机启动时，被执行的主类必须初始化</li><li>动态语言支持java.lang.invoke.MethodHandle解析的结果为REF  getStatic  Ref putstatic REF invokestatic 的方法句柄时，该类必须初始化</li></ul></li></ul><h3 id="自定义类加载器-1"><a href="#自定义类加载器-1" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><ul><li><p>继承ClassLoader</p></li><li><p>重写模板方法findClass（）</p><ul><li>调用defineClass</li></ul></li><li><p>自定义类加载器加载自加密的class</p><ul><li>防止反编译</li><li>防止篡改</li></ul></li></ul><h3 id="混合模式-1"><a href="#混合模式-1" class="headerlink" title="混合模式"></a>混合模式</h3><ul><li>解释器 - bytecode intepreter</li><li>JIT - Just In-Time compiler</li><li>混合模式</li></ul><blockquote><p>-Xmixed 默认混合模式。开始解释执行，启动较快，对热点代码实行检测和编译</p><p>-Xint 纯解释模式。启动快，执行慢</p><p>-Xcomp 纯编译模式，执行快，启动慢</p></blockquote><ul><li>检测热点代码：-XX:CompileThreshold = 10000</li></ul><h3 id="懒加载LazyLoading-1"><a href="#懒加载LazyLoading-1" class="headerlink" title="懒加载LazyLoading"></a>懒加载LazyLoading</h3><ul><li>JVM规范没有规定何时加载</li><li>严格规定何时需要初始化</li><li>加载场景<ul><li>new getstatic putstatic invokestatic指令，访问final 变量除外</li><li>java.lang.reflect 对类进行反射调用</li><li>初始化类的子类时，父类先加载</li><li>虚拟机启动时，被执行的主类必须初始化</li><li>动态语言支持java.lang.invoke.MethodHandle解析的结果为REF  getStatic  Ref putstatic REF invokestatic 的方法句柄时，该类必须初始化</li></ul></li></ul>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+          <category> JVM </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> jvm </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Init Hexo</title>
+      <link href="2020/12/21/hello-world/"/>
+      <url>2020/12/21/hello-world/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Hexo（记录自己搭建的流程）"><a href="#Hexo（记录自己搭建的流程）" class="headerlink" title="Hexo（记录自己搭建的流程）"></a><a href="https://hexo.io/">Hexo</a>（记录自己搭建的流程）</h2><h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><pre><code class="bash">npm install hexo-cli -ghexo initnpm installhexo server</code></pre><h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>git上传插件</p><pre><code class="bash">npm install hexo-deployer-git --save</code></pre><h3 id="hexo基本操作"><a href="#hexo基本操作" class="headerlink" title="hexo基本操作"></a>hexo基本操作</h3><pre><code class="bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo shexo new &quot;My New Post&quot;hexo new post &quot;file&quot;</code></pre><h2 id="更换主题（3-hexo）修改主题配置"><a href="#更换主题（3-hexo）修改主题配置" class="headerlink" title="更换主题（3-hexo）修改主题配置"></a>更换主题（<a href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a>）修改主题配置</h2><h2 id="上传到GithubPages内"><a href="#上传到GithubPages内" class="headerlink" title="上传到GithubPages内"></a>上传到GithubPages内</h2><h3 id="本机生成ssh"><a href="#本机生成ssh" class="headerlink" title="本机生成ssh"></a>本机生成ssh</h3><pre><code class="bash">ssh-keygen -t rsa -C &quot;email@github.com&quot; #github注册的邮箱</code></pre><p>将本机路径下C:\Users\本机路径名.ssh\id_rsa.pub 文件的内容放入Github -&gt;Setting -&gt; SSH and GPG keys内。</p><pre><code>hexo d</code></pre><p>发布项目，xxxxx.github.io 访问</p><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>设计模式-责任链模式</title>
+      <link href="2020/11/24/dp/dp05cor/"/>
+      <url>2020/11/24/dp/dp05cor/</url>
+      
+        <content type="html"><![CDATA[<h2 id="责任链说明："><a href="#责任链说明：" class="headerlink" title="责任链说明："></a>责任链说明：</h2><ul><li>每个接收者都包含对另一个接收者的引用。如果一个对象不能处理该请求，那么它会把相同的请求传给下一个接收者，依此类推。</li></ul><h2 id="特点："><a href="#特点：" class="headerlink" title="特点："></a>特点：</h2><ul><li>解耦合</li><li>增强责任链指派的灵活性（允许动态增加删除）</li></ul><h2 id="示例说明：（Filter-封装过滤-FilterChain）"><a href="#示例说明：（Filter-封装过滤-FilterChain）" class="headerlink" title="示例说明：（Filter-封装过滤-FilterChain）"></a>示例说明：（Filter-封装过滤-FilterChain）</h2>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>设计模式Facade-Mediator</title>
+      <link href="2020/11/24/dp/dp04Facade-Mediator/"/>
+      <url>2020/11/24/dp/dp04Facade-Mediator/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>设计模式-工厂模式</title>
+      <link href="2020/10/11/dp/dp03factory/"/>
+      <url>2020/10/11/dp/dp03factory/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>设计模式-策略模式</title>
+      <link href="2020/10/11/dp/dp02strategy/"/>
+      <url>2020/10/11/dp/dp02strategy/</url>
+      
+        <content type="html"><![CDATA[<h2 id="策略模式说明："><a href="#策略模式说明：" class="headerlink" title="策略模式说明："></a>策略模式说明：</h2><blockquote><p>在策略模式（Strategy Pattern）中，一个类的行为或其算法可以在运行时更改。这种类型的设计模式属于行为型模式。</p></blockquote><p><a href="https://gitee.com/zmlhh/code-source/tree/master/DesignPatterns/src/com/lmz/strategy">gitee示例代码</a></p><h2 id="策略模式特点："><a href="#策略模式特点：" class="headerlink" title="策略模式特点："></a>策略模式特点：</h2><ul><li>算法(策略)之间可以自由的切换，互相之间不会有影响</li><li>可扩展性好</li><li>策略的增加会导致实现类的递增</li></ul><h2 id="策略模式实例（sort）："><a href="#策略模式实例（sort）：" class="headerlink" title="策略模式实例（sort）："></a>策略模式实例（sort）：</h2><ol><li><p>定义实体类Cat，Dog 省略构造方法。</p><pre><code class="java">public class Cat&#123;    int height;    int weight;    String name;&#125;public class Dog&#123;    int food;&#125;</code></pre></li><li><p>实际需求：</p><p>比较两只Cat的height</p><p>比较两只Cat的weight</p><p>比较两只Dog的food</p><pre><code class="java">/** * 定义具体的比较方法 */public class Sort&lt;T&gt; &#123;    public static void sort(Cat[] arr) &#123;        for (int i = 0; i &lt; arr.length; i++) &#123;            int index = i;            for (int j = i + 1; j &lt; arr.length; j++) &#123;                index = arr[j].getHeight() &lt; arr[index].height ? j : index;            &#125;            swap(arr, index, i);        &#125;    &#125;    private static void swap(Cat[] arr, int index, int i) &#123;        Cat temp = arr[i];        arr[i] = arr[index];        arr[index] = temp;    &#125;    public static void sort(Dog[] arr) &#123;        for (int i = 0; i &lt; arr.length; i++) &#123;            int index = i;            for (int j = i + 1; j &lt; arr.length; j++) &#123;                index = arr[j].food &lt; arr[index].food ? j : index;            &#125;            swap(arr, index, i);        &#125;    &#125;    private static void swap(Dog[] arr, int index, int i) &#123;        Dog temp = arr[i];        arr[i] = arr[index];        arr[index] = temp;    &#125;&#125;/** * 定义测试类 */public class Main &#123;    public static void main(String[] args) &#123;        //Cat height        test01();        //Dog food        test02();    &#125;    private static void test01() &#123;        Cat[] arr = &#123;new Cat( 1), new Cat( 5), new Cat( 3)&#125;;        Sort.sort(arr);        System.out.println(Arrays.toString(arr));    &#125;    private static void test02() &#123;        Dog[] arr = &#123;new Dog( 1), new Dog( 5), new Dog( 3)&#125;;        Sort.sort(arr);        System.out.println(Arrays.toString(arr));    &#125;&#125;</code></pre><p><strong>问题：每定义多一种类比较的方法都要在Sort方法内添加具体的实现</strong></p></li><li><p>定义Comparable比较方法</p><pre><code class="java">/** * 比较方法 * @param &lt;T&gt; */public interface Comparable&lt;T&gt; &#123;    int compareTo(T o);&#125;//实体类实现比较接口，Sort类定义新比较方法&#123;    public static void sort(Comparable[] arr) &#123;        for (int i = 0; i &lt; arr.length; i++) &#123;            int index = i;            for (int j = i + 1; j &lt; arr.length; j++) &#123;                index = arr[j].compareTo(arr[index]) == -1 ? j : index;            &#125;            swap(arr, index, i);        &#125;    &#125;    private static void swap(Comparable[] arr, int index, int i) &#123;        Comparable temp = arr[i];        arr[i] = arr[index];        arr[index] = temp;    &#125;&#125;</code></pre></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+            <tag> 行为型 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>设计模式-单例设计模式</title>
+      <link href="2020/10/11/dp/dp01singleton/"/>
+      <url>2020/10/11/dp/dp01singleton/</url>
+      
+        <content type="html"><![CDATA[<p><a href="https://gitee.com/zmlhh/code-source/tree/master/DesignPatterns/src/com/lmz/singleton">gitee示例代码</a></p><h2 id="单例说明："><a href="#单例说明：" class="headerlink" title="单例说明："></a>单例说明：</h2><ul><li><p>单例模式类只能有一个实例</p></li><li><p>单例模式类必须自己创建自己的唯一实例</p></li><li><p>单例模式类必须给所有其他对象提供这一实例</p><h2 id="单例模式的特点："><a href="#单例模式的特点：" class="headerlink" title="单例模式的特点："></a>单例模式的特点：</h2></li><li><p>静态化实例</p></li><li><p>私有化构造函数</p></li><li><p>提供公共的获取方法</p></li></ul><h2 id="单例的7种写法："><a href="#单例的7种写法：" class="headerlink" title="单例的7种写法："></a>单例的7种写法：</h2><ol><li><p>饿汉式</p><pre><code class="java">/** * @author LMZ * 饿汉式加载 * 优点：类加载到内存后，就实例化一个单例，JVM保证线程安全 */public class Pl1 &#123;    private static final Pl1 INSTANCE = new Pl1();    private Pl1() &#123;&#125;    public static Pl1 getInstance() &#123;        return INSTANCE;    &#125;    public void t()&#123;        System.out.println(&quot;pl1&quot;);    &#125;    public static void main(String[] args) &#123;        System.out.println(Pl1.getInstance().hashCode());        System.out.println(Pl1.getInstance().hashCode());    &#125;&#125;</code></pre></li><li><p>懒汉式</p><pre><code class="java">/** * @author LMZ * 懒汉式 * 线程不安全，多线程访问时出现返回实例不唯一 */public class Pl2 &#123;    private static Pl2 INSTANCE;    private Pl2() &#123;&#125;    public static Pl2 getInstance()&#123;        if (INSTANCE == null) &#123;            try &#123;                Thread.sleep(1);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            INSTANCE = new Pl2();        &#125;        return INSTANCE;    &#125;    public void t()&#123;        System.out.println(&quot;pl2&quot;);    &#125;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 100; i++) &#123;            new Thread(()-&gt;&#123;                System.out.println(Pl2.getInstance().hashCode());            &#125;).start();        &#125;    &#125;&#125;</code></pre></li><li><p>懒汉式，加锁</p><pre><code class="java">/** * @author LMZ * 懒汉式 * 在getInstance方法上，加Synchronized锁保证线程安全，效率低 */public class Pl3 &#123;    private static Pl3 INSTANCE;    private Pl3() &#123;&#125;    public synchronized static Pl3 getInstance()&#123;        if (INSTANCE == null) &#123;            try &#123;                Thread.sleep(1);            &#125; catch (InterruptedException e) &#123;                e.printStackTrace();            &#125;            INSTANCE = new Pl3();        &#125;        return INSTANCE;    &#125;    public void t()&#123;        System.out.println(&quot;pl3&quot;);    &#125;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 100; i++) &#123;            new Thread(()-&gt;&#123;                System.out.println(Pl3.getInstance().hashCode());            &#125;).start();        &#125;    &#125;&#125;</code></pre></li><li><p>线程不安全</p><pre><code class="java">/** * @author LMZ * 线程不安全； * 在INSTANCE判断后，多线程在获取锁可能出现锁等待 */public class Pl4 &#123;    private static Pl4 INSTANCE;    private Pl4() &#123;    &#125;    public static Pl4 getInstance() &#123;        if (INSTANCE == null) &#123;            synchronized (Pl4.class) &#123;                try &#123;                    Thread.sleep(1);                &#125; catch (InterruptedException e) &#123;                    e.printStackTrace();                &#125;                INSTANCE = new Pl4();            &#125;        &#125;        return INSTANCE;    &#125;    public void t() &#123;        System.out.println(&quot;pl4&quot;);    &#125;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 100; i++) &#123;            new Thread(() -&gt; &#123;                System.out.println(Pl4.getInstance().hashCode());            &#125;).start();        &#125;    &#125;&#125;</code></pre></li><li><p>双重锁</p><pre><code class="java">/** * @author LMZ * 双重锁检查 */public class Pl5 &#123;    private static Pl5 INSTANCE;    private Pl5() &#123;    &#125;    public static Pl5 getInstance() &#123;        if (INSTANCE == null) &#123;            synchronized (Pl5.class) &#123;                if (INSTANCE == null) &#123;                    try &#123;                        Thread.sleep(1);                    &#125; catch (InterruptedException e) &#123;                        e.printStackTrace();                    &#125;                    INSTANCE = new Pl5();                &#125;            &#125;        &#125;        return INSTANCE;    &#125;    public void t() &#123;        System.out.println(&quot;pl5&quot;);    &#125;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 100; i++) &#123;            new Thread(() -&gt; &#123;                System.out.println(Pl5.getInstance().hashCode());            &#125;).start();        &#125;    &#125;&#125;</code></pre></li><li><p>静态内部类</p><pre><code class="java">/** * @author LMZ * 静态内部类实现单例 */public class Pl6 &#123;    private Pl6()&#123;&#125;    private static class Pl6Helper&#123;        private static Pl6 INSTANCE = new Pl6();    &#125;    private static Pl6 getInstance() &#123;        return Pl6Helper.INSTANCE;    &#125;    public void t() &#123;        System.out.println(&quot;pl6&quot;);    &#125;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 100; i++) &#123;            new Thread(() -&gt; &#123;                System.out.println(Pl6.getInstance().hashCode());            &#125;).start();        &#125;    &#125;&#125;</code></pre></li><li><p>枚举实现单例</p><pre><code class="java">/** * @author LMZ * 枚举类实现单例 * 解决线程同步与反序列化 */public enum Pl7 &#123;    INSTANCE;    public static void main(String[] args) &#123;        for (int i = 0; i &lt; 100; i++) &#123;            new Thread(() -&gt; &#123;                System.out.println(Pl7.INSTANCE.hashCode());            &#125;).start();        &#125;    &#125;&#125;</code></pre></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> 开发知识 </category>
+          
+          <category> 设计模式 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> dp </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+</search>
