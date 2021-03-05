@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>plan-2021 | FlrPG</title>
-  <meta name="keywords" content=" plan ">
-  <meta name="description" content="plan-2021 | FlrPG">
+  <title>jvm-class-loading | FlrPG</title>
+  <meta name="keywords" content=" jvm ">
+  <meta name="description" content="jvm-class-loading | FlrPG">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="404">
@@ -377,13 +377,11 @@
 </aside>
 <div id="post">
     <div class="pjax">
-        <article id="post-plan/plan-2021" class="article article-type-post" itemscope itemprop="blogPost">
+        <article id="post-jvm/jvm01" class="article article-type-post" itemscope itemprop="blogPost">
     
-        <h1 class="article-title">plan-2021</h1>
+        <h1 class="article-title">jvm-class-loading</h1>
     
     <div class="article-meta">
-        
-        <span class="top"><a>置顶</a></span>
         
         
         
@@ -391,7 +389,9 @@
             <i class="iconfont icon-category"></i>
             
             
-            <a  data-rel="开发知识">开发知识</a>
+            <a  data-rel="开发知识">开发知识</a> > 
+            
+            <a  data-rel="开发知识&lt;---&gt;JVM">JVM</a>
             
         </span>
         
@@ -399,19 +399,19 @@
         <span class="tag">
             <i class="iconfont icon-tag"></i>
             
-            <a class="color5">plan</a>
+            <a class="color4">jvm</a>
             
         </span>
         
     </div>
     <div class="article-meta">
         
-            发布时间 : <time class="date" title='最后更新: 2021-01-18 18:39:35'>2021-01-15 09:53</time>
+            发布时间 : <time class="date" title='最后更新: 2021-03-05 11:05:33'>2020-12-22 17:01</time>
         
     </div>
     <div class="article-meta">
         
-        <span>字数:153</span>
+        <span>字数:617</span>
         
         
         <span id="busuanzi_container_page_pv">
@@ -441,7 +441,7 @@
     
     <div class="toc-ref">
     
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#2021"><span class="toc-text">2021</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JAN"><span class="toc-text">JAN</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD-%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%9A"><span class="toc-text">类加载-初始化：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%88%E7%88%B6%E5%8A%A0%E8%BD%BD%E5%99%A8%E4%B8%8D%E6%98%AF%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB%EF%BC%89"><span class="toc-text">类加载器（父加载器不是继承关系）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%EF%BC%88%E5%AE%89%E5%85%A8%EF%BC%89"><span class="toc-text">双亲委派机制（安全）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ClassLoader%E6%BA%90%E7%A0%81"><span class="toc-text">ClassLoader源码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-text">自定义类加载器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B7%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="toc-text">混合模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%87%92%E5%8A%A0%E8%BD%BDLazyLoading"><span class="toc-text">懒加载LazyLoading</span></a></li></ol></li></ol>
     
 <style>
     .left-col .switch-btn,
@@ -457,46 +457,120 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h2><ul>
-<li><input disabled type="checkbox"> JUC</li>
-<li><input disabled type="checkbox"> JVM</li>
-<li><input disabled type="checkbox"> dp</li>
-<li><input disabled type="checkbox"> alg</li>
-<li><input disabled type="checkbox"> redis</li>
-<li><input disabled type="checkbox"> source-spring</li>
+        <h2 id="类加载-初始化："><a href="#类加载-初始化：" class="headerlink" title="类加载-初始化："></a>类加载-初始化：</h2><ol>
+<li>Loading <ul>
+<li>双亲委派</li>
+<li>LazyLoading</li>
+<li>ClassLoader源码</li>
+<li>自定义类加载器</li>
+<li>混合执行 编译执行 解释执行</li>
 </ul>
-<h3 id="JAN"><a href="#JAN" class="headerlink" title="JAN"></a>JAN</h3><p>dp</p>
-<ol>
-<li></li>
+</li>
+<li>Linking<ol>
+<li>Verifivation（校验文件是否符合JVM规定）</li>
+<li>Perparation（！！！class 静态变量赋默认值）</li>
+<li>Resolution（常量池的各种符号引用解析为指针、偏移量等内存地址的直接引用）</li>
 </ol>
-<pre><code class="流程图">graph TD
-A[方形] --&gt; B(圆角)
-    B --&gt; C&#123;条件a&#125;
-    C --&gt; |a=1| D[结果1]
-    C --&gt; |a=2| E[结果2]
-    F[竖向流程图]
-
-graph LR
-A[方形] --&gt;B(圆角)
-    B --&gt; C&#123;条件a&#125;
-    C --&gt;|a=1| D[结果1]
-    C --&gt;|a=2| E[结果2]
-    F[横向流程图]
-</code></pre>
-<pre class="mermaid">graph TD
-A[方形] --> B(圆角)
-    B --> C{条件a}
-    C --> |a=1| D[结果1]
-    C --> |a=2| E[结果2]
-    F[竖向流程图]</pre>
-
-<pre class="mermaid">graph LR
-A[方形] -->B(圆角)
-    B --> C{条件a}
-    C -->|a=1| D[结果1]
-    C -->|a=2| E[结果2]
-    F[横向流程图]</pre>
-
+</li>
+<li>Initializing（调用类初始化代码，静态变量赋初值）</li>
+</ol>
+<h3 id="类加载器（父加载器不是继承关系）"><a href="#类加载器（父加载器不是继承关系）" class="headerlink" title="类加载器（父加载器不是继承关系）"></a>类加载器（父加载器不是继承关系）</h3><table>
+<thead>
+<tr>
+<th>JVM按需动态加载<br>采用双亲委派机制</th>
+<th>类加载器</th>
+<th>– 自顶向下进行实际查找和加载child方向</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>Bootstrap</td>
+<td>加载lib、rt.jar chartset.jar 核心类，C++实现</td>
+</tr>
+<tr>
+<td></td>
+<td>Extension</td>
+<td>加载扩展jar包 jre/lib/ext/*.jar，或由-Djava.ext.dirs指定</td>
+</tr>
+<tr>
+<td></td>
+<td>App</td>
+<td>加载classpath指定内容</td>
+</tr>
+<tr>
+<td>自底向上检查<br>该类是否已经<br>加载parent方向</td>
+<td>CustomClassLoader</td>
+<td>自定义的ClassLoader</td>
+</tr>
+</tbody></table>
+<h3 id="双亲委派机制（安全）"><a href="#双亲委派机制（安全）" class="headerlink" title="双亲委派机制（安全）"></a>双亲委派机制（安全）</h3><ul>
+<li><p>父加载器</p>
+<blockquote>
+<p>父加载器不是类“类加载器的加载器”。也不是“类加载器的父类加载器”</p>
+</blockquote>
+</li>
+<li><p>类加载器的范围</p>
+<blockquote>
+<p>Launcher源码</p>
+</blockquote>
+</li>
+<li><p>双亲委派打破的问题</p>
+<ol>
+<li>如何打破？重写ClassLoader中 loadClass 方法</li>
+<li>何时打破？<ul>
+<li>JDK1.2之前自定义CLassLoader都必须重写loadClass</li>
+<li>当前线程内指定ClassLoader，thread.setContextClassLoader</li>
+<li>热启动，热部署 osgi、tomcat，可以加载不同版本的代码。</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="ClassLoader源码"><a href="#ClassLoader源码" class="headerlink" title="ClassLoader源码"></a>ClassLoader源码</h3><blockquote>
+<p>loadClass（）方法</p>
+</blockquote>
+<pre><code class="java">private final ClassLoader parent; //源码内不可修改</code></pre>
+<p>![截屏2021-02-24 下午5.48.17](/Users/lmzz/Dev/CodeSelf/blog/source/_posts/jvm/jvm01/截屏2021-02-24 下午5.48.17.png)</p>
+<h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><ul>
+<li><p>继承ClassLoader</p>
+</li>
+<li><p>重写模板方法findClass（）</p>
+<ul>
+<li>调用defineClass</li>
+</ul>
+</li>
+<li><p>自定义类加载器加载自加密的class</p>
+<ul>
+<li>防止反编译</li>
+<li>防止篡改</li>
+</ul>
+</li>
+</ul>
+<h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><ul>
+<li>解释器 - bytecode intepreter</li>
+<li>JIT - Just In-Time compiler</li>
+<li>混合模式</li>
+</ul>
+<blockquote>
+<p>-Xmixed 默认混合模式。开始解释执行，启动较快，对热点代码实行检测和编译</p>
+<p>-Xint 纯解释模式。启动快，执行慢</p>
+<p>-Xcomp 纯编译模式，执行快，启动慢</p>
+</blockquote>
+<ul>
+<li>检测热点代码：-XX:CompileThreshold = 10000</li>
+</ul>
+<h3 id="懒加载LazyLoading"><a href="#懒加载LazyLoading" class="headerlink" title="懒加载LazyLoading"></a>懒加载LazyLoading</h3><ul>
+<li>JVM规范没有规定何时加载</li>
+<li>严格规定何时需要初始化</li>
+<li>加载场景<ul>
+<li>new getstatic putstatic invokestatic指令，访问final 变量除外</li>
+<li>java.lang.reflect 对类进行反射调用</li>
+<li>初始化类的子类时，父类先加载</li>
+<li>虚拟机启动时，被执行的主类必须初始化</li>
+<li>动态语言支持java.lang.invoke.MethodHandle解析的结果为REF  getStatic  Ref putstatic REF invokestatic 的方法句柄时，该类必须初始化</li>
+</ul>
+</li>
+</ul>
 
       
        <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 1561250568@qq.com </span>
