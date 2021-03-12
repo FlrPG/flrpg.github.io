@@ -6,7 +6,7 @@
   <link href="https://flrpg.github.io/atom.xml" rel="self"/>
   
   <link href="https://flrpg.github.io/"/>
-  <updated>2021-03-05T06:29:36.946Z</updated>
+  <updated>2021-03-12T02:22:49.836Z</updated>
   <id>https://flrpg.github.io/</id>
   
   <author>
@@ -21,15 +21,15 @@
     <link href="https://flrpg.github.io/2021/03/05/testImage/"/>
     <id>https://flrpg.github.io/2021/03/05/testImage/</id>
     <published>2021-03-05T06:26:19.000Z</published>
-    <updated>2021-03-05T06:29:36.946Z</updated>
+    <updated>2021-03-12T02:22:49.836Z</updated>
     
-    <content type="html"><![CDATA[<p>test</p><p><img src="/.io//jvm.png" alt="jvm"></p>]]></content>
+    <content type="html"><![CDATA[<p>test</p><p><img src="/2021/03/05/testImage/jvm-5515766.png" alt="jvm"></p>]]></content>
     
     
       
       
     <summary type="html">&lt;p&gt;test&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/.io//jvm.png&quot; alt=&quot;jvm&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2021/03/05/testImage/jvm-5515766.png&quot; alt=&quot;jvm&quot;&gt;&lt;/p&gt;
 </summary>
       
     
