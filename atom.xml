@@ -6,7 +6,7 @@
   <link href="https://flrpg.github.io/atom.xml" rel="self"/>
   
   <link href="https://flrpg.github.io/"/>
-  <updated>2021-03-12T02:22:49.836Z</updated>
+  <updated>2021-03-16T02:29:32.533Z</updated>
   <id>https://flrpg.github.io/</id>
   
   <author>
@@ -17,53 +17,52 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>testImage</title>
-    <link href="https://flrpg.github.io/2021/03/05/testImage/"/>
-    <id>https://flrpg.github.io/2021/03/05/testImage/</id>
-    <published>2021-03-05T06:26:19.000Z</published>
-    <updated>2021-03-12T02:22:49.836Z</updated>
+    <title>SpringBoot + JPA + 多数据源 + JDNI配置</title>
+    <link href="https://flrpg.github.io/2021/03/16/issue/issue-002-%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90/"/>
+    <id>https://flrpg.github.io/2021/03/16/issue/issue-002-%E5%A4%9A%E6%95%B0%E6%8D%AE%E6%BA%90/</id>
+    <published>2021-03-16T01:48:17.000Z</published>
+    <updated>2021-03-16T02:29:32.533Z</updated>
     
-    <content type="html"><![CDATA[<p>test</p><p><img src="/2021/03/05/testImage/jvm-5515766.png" alt="jvm"></p>]]></content>
+    <content type="html"><![CDATA[<h3 id="配置说明："><a href="#配置说明：" class="headerlink" title="配置说明："></a>配置说明：</h3><blockquote><p>在SpringBoot 下多数据源配置、使用 （一方引用JDNI 配置）</p></blockquote><p><strong>application.yml</strong> 文件配置：</p><ul><li>主数据源DB2 配置信息读取 Tomcat JDNI 配置</li></ul><pre><code class="yml">spring:  datasource:    primary:      jndi-name: java:comp/env/jdbc/XXX      expected-type: javax.sql.DataSource      driver-class-name: com.ibm.db2.jcc.DB2Driver      jdbc-url: jdbc:db2://127.0.0.1:60000/test      username: root      password: root    second:      driver-class-name: com.mysql.jdbc.Driver      jdbc-url: jdbc:mysql://127.0.0.1:3306/test      username: root      password: root  jpa:    database-platform: org.hibernate.dialect.DB2Dialect    show-sql: false    hibernate:      ddl-auto: none    properties:      hibernate:        primary-dialect: org.hibernate.dialect.DB2Dialect        second-dialect: org.hibernate.dialect.MySQL55Dialect</code></pre><p><strong>DataSourceConfig.java</strong> 配置类：</p><pre><code class="java">@Configurationpublic class DataSourceConfig &#123;    @Value(&quot;$&#123;spring.datasource.primary.jndi-name&#125;&quot;)    private String jndiName;    /**     * 第一个数据连接，默认优先级最高     *     * @return     */    @Primary    @Bean(name = &quot;primaryDataSource&quot;)    @Qualifier(&quot;primaryDataSource&quot;)    @ConfigurationProperties(prefix = &quot;spring.datasource.primary&quot;)    public DataSource PrimaryDataSource() throws NamingException &#123;        if (!StrUtil.isNotEmpty(jndiName)) &#123;            return DataSourceBuilder.create().build();        &#125; else &#123;            //存在jdni 配置时先加载 tomcat 配置 导入方式一：            Context initCt = new InitialContext();            return (DataSource) initCt.lookup(jndiName);            /*            //导入方式二：            JndiObjectFactoryBean bean = new JndiObjectFactoryBean();            bean.setJndiName(jndiName);            bean.setProxyInterface(DataSource.class);            bean.setLookupOnStartup(false);            bean.afterPropertiesSet();            return (DataSource)bean.getObject();*/    &#125;    /**     * 第二个数据源     *     * @return     */    @Bean(name = &quot;secondDataSource&quot;)    @Qualifier(&quot;secondDataSource&quot;)    @ConfigurationProperties(prefix = &quot;spring.datasource.second&quot;)    public DataSource secondaryDataSource() &#123;        return DataSourceBuilder.create().build();    &#125;</code></pre><p><strong>PrimaryConfig.java</strong> 主数据源配置：</p><pre><code class="java">@Configuration@EnableTransactionManagement@EnableJpaRepositories(        entityManagerFactoryRef = &quot;entityManagerFactoryPrimary&quot;,        transactionManagerRef = &quot;transactionManagerPrimary&quot;,        basePackages = &#123;&quot;com.cathay.east.repo&quot;&#125;) //设置Repository所在位置public class PrimaryConfig &#123;    @Autowired    private HibernateProperties hibernateProperties;    @Autowired    @Qualifier(&quot;primaryDataSource&quot;)    private DataSource primaryDataSource;    @Autowired    private JpaProperties jpaProperties;    @Autowired    private Environment env;    @Primary    @Bean(name = &quot;entityManagerPrimary&quot;)    public EntityManager entityManager(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) &#123;        return entityManagerFactoryPrimary(builder).getObject().createEntityManager();    &#125;    @Primary    @Bean(name = &quot;entityManagerFactoryPrimary&quot;)    public LocalContainerEntityManagerFactoryBean entityManagerFactoryPrimary(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) &#123;        Map&lt;String, Object&gt; properties = hibernateProperties.determineHibernateProperties(                jpaProperties.getProperties(), new HibernateSettings());        //Jpa 方言配置        properties.put(&quot;hibernate.dialect&quot;, env.getProperty(&quot;spring.jpa.properties.hibernate.primary-dialect&quot;));        return builder                .dataSource(primaryDataSource)                .properties(properties)                //设置实体类所在位置                .packages(&quot;com.cathay.east.entity&quot;,&quot;com.cathay.east.origin&quot;,&quot;com.cathay.east.daily&quot;)                //多数据源EntityManager 引用导入                .persistenceUnit(&quot;primaryPersistenceUnit&quot;)                .build();    &#125;    @Primary    @Bean(name = &quot;transactionManagerPrimary&quot;)    public PlatformTransactionManager transactionManagerPrimary(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) &#123;        return new JpaTransactionManager(entityManagerFactoryPrimary(builder).getObject());    &#125;&#125;</code></pre><p><strong>SecondConfig.java</strong> 第二数据源配置：</p><pre><code class="java">@Configuration@EnableTransactionManagement@EnableJpaRepositories(        entityManagerFactoryRef = &quot;entityManagerFactorySecond&quot;,        transactionManagerRef = &quot;transactionManagerSecond&quot;,        basePackages = &#123;&quot;com.cathay.east.mysqlRepo&quot;&#125;) //设置Repository所在位置public class SecondConfig &#123;    @Autowired    @Qualifier(&quot;secondDataSource&quot;)    private DataSource SecondDataSource;    @Autowired    private JpaProperties jpaProperties;    @Autowired    private HibernateProperties hibernateProperties;    @Autowired    private Environment env;    @Bean(name = &quot;entityManagerSecond&quot;)    public EntityManager entityManager(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) &#123;        return entityManagerFactorySecond(builder).getObject().createEntityManager();    &#125;    @Bean(name = &quot;entityManagerFactorySecond&quot;)    public LocalContainerEntityManagerFactoryBean entityManagerFactorySecond(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) &#123;        Map&lt;String, Object&gt; properties = hibernateProperties.determineHibernateProperties(                jpaProperties.getProperties(), new HibernateSettings());        properties.put(&quot;hibernate.dialect&quot;, env.getProperty(&quot;spring.jpa.properties.hibernate.second-dialect&quot;));        return builder                .dataSource(SecondDataSource)                .properties(properties)                //设置实体类所在位置                .packages(&quot;com.cathay.east.mysqlEntity&quot;)                .persistenceUnit(&quot;SecondPersistenceUnit&quot;)                .build();    &#125;    @Bean(name = &quot;transactionManagerSecond&quot;)    PlatformTransactionManager transactionManagerSecond(org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder builder) &#123;        return new JpaTransactionManager(entityManagerFactorySecond(builder).getObject());    &#125;</code></pre><h3 id="测试代码："><a href="#测试代码：" class="headerlink" title="测试代码："></a>测试代码：</h3><pre><code class="java">    @Autowired    private PolGroupRepository polGroupRepository;    @Autowired    private WtTtbdbOTempLogRepository wtTtbdbOTempLogRepository;    @Test    public void dataSource() &#123;        //主数据源        Page&lt;PolGroup&gt; polGroups = polGroupRepository.findAll( PageRequest.of(0, Constant.PAGE_SIZE));        System.out.println(polGroups.stream().count());        //第二数据源        Page&lt;WtTtbdbOTempLogEntity&gt; page = wtTtbdbOTempLogRepository.findAll(PageRequest.of(0, Constant.PAGE_SIZE));        System.out.println(page.stream().count());    &#125;</code></pre><h3 id="注意事项："><a href="#注意事项：" class="headerlink" title="注意事项："></a>注意事项：</h3><ol><li><p>注入EntityManager时 – 注意配置的数据源 unitName</p><blockquote><pre><code class="java">@PersistenceContext(unitName=&quot;primaryPersistenceUnit&quot;)private EntityManager entityManager;</code></pre></blockquote></li><li><p>生成的实体类 与 Repository类 需要按对应数据源指定文件夹位置</p><blockquote><pre><code class="java">//设置Repository所在位置basePackages = &#123;&quot;com.cathay.east.repo&quot;&#125;//设置实体类所在位置.packages(&quot;com.cathay.east.entity&quot;,&quot;com.cathay.east.origin&quot;,&quot;com.cathay.east.daily&quot;)</code></pre></blockquote></li></ol>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;test&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/2021/03/05/testImage/jvm-5515766.png&quot; alt=&quot;jvm&quot;&gt;&lt;/p&gt;
-</summary>
+    <summary type="html">&lt;h3 id=&quot;配置说明：&quot;&gt;&lt;a href=&quot;#配置说明：&quot; class=&quot;headerlink&quot; title=&quot;配置说明：&quot;&gt;&lt;/a&gt;配置说明：&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;在SpringBoot 下多数据源配置、使用 （一方引用JDNI 配置）&lt;/p&gt;
+&lt;/bl</summary>
       
     
     
     
-    <category term="开发知识" scheme="https://flrpg.github.io/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/"/>
+    <category term="问题集" scheme="https://flrpg.github.io/categories/%E9%97%AE%E9%A2%98%E9%9B%86/"/>
     
     
-    <category term="tag1" scheme="https://flrpg.github.io/tags/tag1/"/>
+    <category term="issue" scheme="https://flrpg.github.io/tags/issue/"/>
     
   </entry>
   
   <entry>
-    <title>JVM_000</title>
-    <link href="https://flrpg.github.io/2021/03/05/JVM-000/"/>
-    <id>https://flrpg.github.io/2021/03/05/JVM-000/</id>
-    <published>2021-03-05T05:30:36.000Z</published>
-    <updated>2021-03-05T06:17:57.949Z</updated>
+    <title>【项目总结】GTRS-EAST</title>
+    <link href="https://flrpg.github.io/2021/03/12/summary/summary-001/"/>
+    <id>https://flrpg.github.io/2021/03/12/summary/summary-001/</id>
+    <published>2021-03-12T02:34:38.000Z</published>
+    <updated>2021-03-12T02:47:04.954Z</updated>
     
-    <content type="html"><![CDATA[<p>![截屏2021-02-24 下午5.48.17](/Users/lmzz/Desktop/截屏2021-02-24 下午5.48.17.png)</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="项目说明"><a href="#项目说明" class="headerlink" title="项目说明"></a>项目说明</h3><blockquote><p>业务数据抽取上报报送EAST，涉及原表数据的抽取、转码、脱敏、核验、上报。</p></blockquote><p><a href="https://www.processon.com/view/link/604ad428f346fb78ada3db0c">项目流程图</a></p><p><a href="https://www.processon.com/view/link/603f492807912951ff2dcd64">业务流程图</a></p><h3 id="项目内碰到的问题点"><a href="#项目内碰到的问题点" class="headerlink" title="项目内碰到的问题点"></a>项目内碰到的问题点</h3><ul><li>各业务表统一 LSH 生成（唯一ID）</li><li>大数据量业务字段抽取</li><li>接口设计规范问题</li><li>查询sql优化-DB2</li><li>多数据源 + JDNI配置</li></ul>]]></content>
     
     
       
       
-    <summary type="html">&lt;p&gt;![截屏2021-02-24 下午5.48.17](/Users/lmzz/Desktop/截屏2021-02-24 下午5.48.17.png)&lt;/p&gt;
-</summary>
+    <summary type="html">&lt;h3 id=&quot;项目说明&quot;&gt;&lt;a href=&quot;#项目说明&quot; class=&quot;headerlink&quot; title=&quot;项目说明&quot;&gt;&lt;/a&gt;项目说明&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;业务数据抽取上报报送EAST，涉及原表数据的抽取、转码、脱敏、核验、上报。&lt;/p&gt;
+&lt;/block</summary>
       
     
     
     
-    <category term="开发知识" scheme="https://flrpg.github.io/categories/%E5%BC%80%E5%8F%91%E7%9F%A5%E8%AF%86/"/>
+    <category term="总结" scheme="https://flrpg.github.io/categories/%E6%80%BB%E7%BB%93/"/>
     
-    
-    <category term="tag1" scheme="https://flrpg.github.io/tags/tag1/"/>
     
   </entry>
   
@@ -132,16 +131,16 @@
     <link href="https://flrpg.github.io/2021/01/15/plan/plan-2021/"/>
     <id>https://flrpg.github.io/2021/01/15/plan/plan-2021/</id>
     <published>2021-01-15T01:53:52.000Z</published>
-    <updated>2021-01-18T10:39:35.681Z</updated>
+    <updated>2021-03-12T09:34:35.754Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h2><ul><li><input disabled type="checkbox"> JUC</li><li><input disabled type="checkbox"> JVM</li><li><input disabled type="checkbox"> dp</li><li><input disabled type="checkbox"> alg</li><li><input disabled type="checkbox"> redis</li><li><input disabled type="checkbox"> source-spring</li></ul><h3 id="JAN"><a href="#JAN" class="headerlink" title="JAN"></a>JAN</h3><p>dp</p><ol><li></li></ol><pre><code class="流程图">graph TDA[方形] --&gt; B(圆角)    B --&gt; C&#123;条件a&#125;    C --&gt; |a=1| D[结果1]    C --&gt; |a=2| E[结果2]    F[竖向流程图]graph LRA[方形] --&gt;B(圆角)    B --&gt; C&#123;条件a&#125;    C --&gt;|a=1| D[结果1]    C --&gt;|a=2| E[结果2]    F[横向流程图]</code></pre><pre class="mermaid">graph TDA[方形] --> B(圆角)    B --> C{条件a}    C --> |a=1| D[结果1]    C --> |a=2| E[结果2]    F[竖向流程图]</pre><pre class="mermaid">graph LRA[方形] -->B(圆角)    B --> C{条件a}    C -->|a=1| D[结果1]    C -->|a=2| E[结果2]    F[横向流程图]</pre>]]></content>
+    <content type="html"><![CDATA[<h2 id="2021"><a href="#2021" class="headerlink" title="2021"></a>2021</h2><ul><li><input disabled type="checkbox"> DP</li><li><input disabled type="checkbox"> JUC</li><li><input disabled type="checkbox"> JVM</li><li><input disabled type="checkbox"> Redis</li><li><input disabled type="checkbox"> Mysql</li><li><input disabled type="checkbox"> Netty —</li><li><input disabled type="checkbox"> Source-Spring  Source-Netty —</li><li><input disabled type="checkbox"> Project</li><li><input disabled type="checkbox"> alg</li></ul><pre><code class="流程图">graph TDA[方形] --&gt; B(圆角)    B --&gt; C&#123;条件a&#125;    C --&gt; |a=1| D[结果1]    C --&gt; |a=2| E[结果2]    F[竖向流程图]graph LRA[方形] --&gt;B(圆角)    B --&gt; C&#123;条件a&#125;    C --&gt;|a=1| D[结果1]    C --&gt;|a=2| E[结果2]    F[横向流程图]</code></pre><pre class="mermaid">graph TDA[方形] --> B(圆角)    B --> C{条件a}    C --> |a=1| D[结果1]    C --> |a=2| E[结果2]    F[竖向流程图]</pre><pre class="mermaid">graph LRA[方形] -->B(圆角)    B --> C{条件a}    C -->|a=1| D[结果1]    C -->|a=2| E[结果2]    F[横向流程图]</pre>]]></content>
     
     
       
       
     <summary type="html">&lt;h2 id=&quot;2021&quot;&gt;&lt;a href=&quot;#2021&quot; class=&quot;headerlink&quot; title=&quot;2021&quot;&gt;&lt;/a&gt;2021&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;input disabled type=&quot;checkbox&quot;&gt; JUC&lt;/li&gt;
-&lt;li&gt;&lt;input dis</summary>
+&lt;li&gt;&lt;input disabled type=&quot;checkbox&quot;&gt; DP&lt;/li&gt;
+&lt;li&gt;&lt;input disa</summary>
       
     
     
@@ -204,10 +203,10 @@
   
   <entry>
     <title>线程池创建-中止</title>
-    <link href="https://flrpg.github.io/2020/12/22/issue/issue001/"/>
-    <id>https://flrpg.github.io/2020/12/22/issue/issue001/</id>
+    <link href="https://flrpg.github.io/2020/12/22/issue/issue-001/"/>
+    <id>https://flrpg.github.io/2020/12/22/issue/issue-001/</id>
     <published>2020-12-22T10:08:42.000Z</published>
-    <updated>2021-01-08T10:27:04.423Z</updated>
+    <updated>2021-03-16T02:31:32.883Z</updated>
     
     <content type="html"><![CDATA[<p>依赖</p><pre><code class="xml">&lt;dependency&gt;            &lt;groupId&gt;cn.hutool&lt;/groupId&gt;            &lt;artifactId&gt;hutool-all&lt;/artifactId&gt;            &lt;version&gt;5.5.2&lt;/version&gt;&lt;/dependency&gt;</code></pre><p>示例</p><pre><code class="java">private static void test5ThreadDown() &#123;        int polGroupCount = 29999;        int polPersonCount = 51000;        int gSize = 8, pSize = 2;        int gCount = polGroupCount / gSize, pCount = polPersonCount / pSize;        //创建线程池        ExecutorService service = ThreadUtil.newExecutor(gSize + pSize);        for (int i = 0; i &lt; gSize; i++) &#123;            int startIndex = i * gCount;            int endIndex = i * gCount + gCount;            if (i == gSize - 1) &#123;                endIndex = polGroupCount;            &#125;            if (startIndex == endIndex) &#123;                continue;            &#125;            int finalEndIndex = endIndex;            service.submit(() -&gt; &#123;                try &#123;                    System.out.println(&quot;startIndex: &quot; + startIndex + &quot; endIndex: &quot; + finalEndIndex);                    for (int j = 0; j &lt; 5; j++) &#123;                        ThreadUtil.safeSleep(1000);                        System.out.println(Thread.currentThread().getName() + &quot;--j--&quot; + j);                    &#125;                    System.out.println(Thread.currentThread().getName() + &quot;-end......&quot;);                &#125; catch (Exception e) &#123;                    System.out.println(e.getMessage());                &#125;            &#125;);        &#125;        //线程池        service.shutdown();        while (true) &#123;            if (service.isTerminated()) &#123;                //当所有任务执行结束完成后，return true                System.out.println(&quot;线程都结束勒。。。&quot;);                break;            &#125;            ThreadUtil.safeSleep(1000);        &#125;        System.out.println(&quot;endAll==================&quot;);    &#125;</code></pre>]]></content>
     
@@ -234,9 +233,9 @@
     <link href="https://flrpg.github.io/2020/12/22/jvm/jvm01/"/>
     <id>https://flrpg.github.io/2020/12/22/jvm/jvm01/</id>
     <published>2020-12-22T09:01:31.000Z</published>
-    <updated>2021-03-05T05:19:13.299Z</updated>
+    <updated>2021-03-16T02:30:08.569Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="类加载-初始化："><a href="#类加载-初始化：" class="headerlink" title="类加载-初始化："></a>类加载-初始化：</h2><ol><li>Loading <ul><li>双亲委派</li><li>LazyLoading</li><li>ClassLoader源码</li><li>自定义类加载器</li><li>混合执行 编译执行 解释执行</li></ul></li><li>Linking<ol><li>Verifivation（校验文件是否符合JVM规定）</li><li>Perparation（！！！class 静态变量赋默认值）</li><li>Resolution（常量池的各种符号引用解析为指针、偏移量等内存地址的直接引用）</li></ol></li><li>Initializing（调用类初始化代码，静态变量赋初值）</li></ol><h3 id="类加载器（父加载器不是继承关系）"><a href="#类加载器（父加载器不是继承关系）" class="headerlink" title="类加载器（父加载器不是继承关系）"></a>类加载器（父加载器不是继承关系）</h3><table><thead><tr><th>JVM按需动态加载<br>采用双亲委派机制</th><th>类加载器</th><th>– 自顶向下进行实际查找和加载child方向</th></tr></thead><tbody><tr><td></td><td>Bootstrap</td><td>加载lib、rt.jar chartset.jar 核心类，C++实现</td></tr><tr><td></td><td>Extension</td><td>加载扩展jar包 jre/lib/ext/*.jar，或由-Djava.ext.dirs指定</td></tr><tr><td></td><td>App</td><td>加载classpath指定内容</td></tr><tr><td>自底向上检查<br>该类是否已经<br>加载parent方向</td><td>CustomClassLoader</td><td>自定义的ClassLoader</td></tr></tbody></table><h3 id="双亲委派机制（安全）"><a href="#双亲委派机制（安全）" class="headerlink" title="双亲委派机制（安全）"></a>双亲委派机制（安全）</h3><ul><li><p>父加载器</p><blockquote><p>父加载器不是类“类加载器的加载器”。也不是“类加载器的父类加载器”</p></blockquote></li><li><p>类加载器的范围</p><blockquote><p>Launcher源码</p></blockquote></li><li><p>双亲委派打破的问题</p><ol><li>如何打破？重写ClassLoader中 loadClass 方法</li><li>何时打破？<ul><li>JDK1.2之前自定义CLassLoader都必须重写loadClass</li><li>当前线程内指定ClassLoader，thread.setContextClassLoader</li><li>热启动，热部署 osgi、tomcat，可以加载不同版本的代码。</li></ul></li></ol></li></ul><h3 id="ClassLoader源码"><a href="#ClassLoader源码" class="headerlink" title="ClassLoader源码"></a>ClassLoader源码</h3><blockquote><p>loadClass（）方法</p></blockquote><pre><code class="java">private final ClassLoader parent; //源码内不可修改</code></pre><p>![截屏2021-02-24 下午5.48.17](jvm01/截屏2021-02-24 下午5.48.17.png)</p><h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><ul><li><p>继承ClassLoader</p></li><li><p>重写模板方法findClass（）</p><ul><li>调用defineClass</li></ul></li><li><p>自定义类加载器加载自加密的class</p><ul><li>防止反编译</li><li>防止篡改</li></ul></li></ul><h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><ul><li>解释器 - bytecode intepreter</li><li>JIT - Just In-Time compiler</li><li>混合模式</li></ul><blockquote><p>-Xmixed 默认混合模式。开始解释执行，启动较快，对热点代码实行检测和编译</p><p>-Xint 纯解释模式。启动快，执行慢</p><p>-Xcomp 纯编译模式，执行快，启动慢</p></blockquote><ul><li>检测热点代码：-XX:CompileThreshold = 10000</li></ul><h3 id="懒加载LazyLoading"><a href="#懒加载LazyLoading" class="headerlink" title="懒加载LazyLoading"></a>懒加载LazyLoading</h3><ul><li>JVM规范没有规定何时加载</li><li>严格规定何时需要初始化</li><li>加载场景<ul><li>new getstatic putstatic invokestatic指令，访问final 变量除外</li><li>java.lang.reflect 对类进行反射调用</li><li>初始化类的子类时，父类先加载</li><li>虚拟机启动时，被执行的主类必须初始化</li><li>动态语言支持java.lang.invoke.MethodHandle解析的结果为REF  getStatic  Ref putstatic REF invokestatic 的方法句柄时，该类必须初始化</li></ul></li></ul>]]></content>
+    <content type="html"><![CDATA[<h2 id="类加载-初始化："><a href="#类加载-初始化：" class="headerlink" title="类加载-初始化："></a>类加载-初始化：</h2><ol><li>Loading <ul><li>双亲委派</li><li>LazyLoading</li><li>ClassLoader源码</li><li>自定义类加载器</li><li>混合执行 编译执行 解释执行</li></ul></li><li>Linking<ol><li>Verifivation（校验文件是否符合JVM规定）</li><li>Perparation（！！！class 静态变量赋默认值）</li><li>Resolution（常量池的各种符号引用解析为指针、偏移量等内存地址的直接引用）</li></ol></li><li>Initializing（调用类初始化代码，静态变量赋初值）</li></ol><h3 id="类加载器（父加载器不是继承关系）"><a href="#类加载器（父加载器不是继承关系）" class="headerlink" title="类加载器（父加载器不是继承关系）"></a>类加载器（父加载器不是继承关系）</h3><table><thead><tr><th>JVM按需动态加载<br>采用双亲委派机制</th><th>类加载器</th><th>– 自顶向下进行实际查找和加载child方向</th></tr></thead><tbody><tr><td></td><td>Bootstrap</td><td>加载lib、rt.jar chartset.jar 核心类，C++实现</td></tr><tr><td></td><td>Extension</td><td>加载扩展jar包 jre/lib/ext/*.jar，或由-Djava.ext.dirs指定</td></tr><tr><td></td><td>App</td><td>加载classpath指定内容</td></tr><tr><td>自底向上检查<br>该类是否已经<br>加载parent方向</td><td>CustomClassLoader</td><td>自定义的ClassLoader</td></tr></tbody></table><h3 id="双亲委派机制（安全）"><a href="#双亲委派机制（安全）" class="headerlink" title="双亲委派机制（安全）"></a>双亲委派机制（安全）</h3><ul><li><p>父加载器</p><blockquote><p>父加载器不是类“类加载器的加载器”。也不是“类加载器的父类加载器”</p></blockquote></li><li><p>类加载器的范围</p><blockquote><p>Launcher源码</p></blockquote></li><li><p>双亲委派打破的问题</p><ol><li>如何打破？重写ClassLoader中 loadClass 方法</li><li>何时打破？<ul><li>JDK1.2之前自定义CLassLoader都必须重写loadClass</li><li>当前线程内指定ClassLoader，thread.setContextClassLoader</li><li>热启动，热部署 osgi、tomcat，可以加载不同版本的代码。</li></ul></li></ol></li></ul><h3 id="ClassLoader源码"><a href="#ClassLoader源码" class="headerlink" title="ClassLoader源码"></a>ClassLoader源码</h3><blockquote><p>loadClass（）方法</p></blockquote><pre><code class="java">private final ClassLoader parent; //源码内不可修改</code></pre><p><img src="/2020/12/22/jvm/jvm01/jvm.png" alt="jvm"></p><h3 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a>自定义类加载器</h3><ul><li><p>继承ClassLoader</p></li><li><p>重写模板方法findClass（）</p><ul><li>调用defineClass</li></ul></li><li><p>自定义类加载器加载自加密的class</p><ul><li>防止反编译</li><li>防止篡改</li></ul></li></ul><h3 id="混合模式"><a href="#混合模式" class="headerlink" title="混合模式"></a>混合模式</h3><ul><li>解释器 - bytecode intepreter</li><li>JIT - Just In-Time compiler</li><li>混合模式</li></ul><blockquote><p>-Xmixed 默认混合模式。开始解释执行，启动较快，对热点代码实行检测和编译</p><p>-Xint 纯解释模式。启动快，执行慢</p><p>-Xcomp 纯编译模式，执行快，启动慢</p></blockquote><ul><li>检测热点代码：-XX:CompileThreshold = 10000</li></ul><h3 id="懒加载LazyLoading"><a href="#懒加载LazyLoading" class="headerlink" title="懒加载LazyLoading"></a>懒加载LazyLoading</h3><ul><li>JVM规范没有规定何时加载</li><li>严格规定何时需要初始化</li><li>加载场景<ul><li>new getstatic putstatic invokestatic指令，访问final 变量除外</li><li>java.lang.reflect 对类进行反射调用</li><li>初始化类的子类时，父类先加载</li><li>虚拟机启动时，被执行的主类必须初始化</li><li>动态语言支持java.lang.invoke.MethodHandle解析的结果为REF  getStatic  Ref putstatic REF invokestatic 的方法句柄时，该类必须初始化</li></ul></li></ul>]]></content>
     
     
       
@@ -263,9 +262,9 @@
     <link href="https://flrpg.github.io/2020/12/21/hello-world/"/>
     <id>https://flrpg.github.io/2020/12/21/hello-world/</id>
     <published>2020-12-21T02:17:30.771Z</published>
-    <updated>2020-10-11T11:21:49.809Z</updated>
+    <updated>2021-03-12T02:32:01.205Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="Hexo（记录自己搭建的流程）"><a href="#Hexo（记录自己搭建的流程）" class="headerlink" title="Hexo（记录自己搭建的流程）"></a><a href="https://hexo.io/">Hexo</a>（记录自己搭建的流程）</h2><h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><pre><code class="bash">npm install hexo-cli -ghexo initnpm installhexo server</code></pre><h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>git上传插件</p><pre><code class="bash">npm install hexo-deployer-git --save</code></pre><h3 id="hexo基本操作"><a href="#hexo基本操作" class="headerlink" title="hexo基本操作"></a>hexo基本操作</h3><pre><code class="bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo shexo new &quot;My New Post&quot;hexo new post &quot;file&quot;</code></pre><h2 id="更换主题（3-hexo）修改主题配置"><a href="#更换主题（3-hexo）修改主题配置" class="headerlink" title="更换主题（3-hexo）修改主题配置"></a>更换主题（<a href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a>）修改主题配置</h2><h2 id="上传到GithubPages内"><a href="#上传到GithubPages内" class="headerlink" title="上传到GithubPages内"></a>上传到GithubPages内</h2><h3 id="本机生成ssh"><a href="#本机生成ssh" class="headerlink" title="本机生成ssh"></a>本机生成ssh</h3><pre><code class="bash">ssh-keygen -t rsa -C &quot;email@github.com&quot; #github注册的邮箱</code></pre><p>将本机路径下C:\Users\本机路径名.ssh\id_rsa.pub 文件的内容放入Github -&gt;Setting -&gt; SSH and GPG keys内。</p><pre><code>hexo d</code></pre><p>发布项目，xxxxx.github.io 访问</p><p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="bash">$ hexo new &quot;My New Post&quot;</code></pre><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="bash">$ hexo server</code></pre><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="bash">$ hexo generate</code></pre><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="bash">$ hexo deploy</code></pre><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="Hexo（记录自己搭建的流程）"><a href="#Hexo（记录自己搭建的流程）" class="headerlink" title="Hexo（记录自己搭建的流程）"></a><a href="https://hexo.io/">Hexo</a>（记录自己搭建的流程）</h2><h3 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h3><pre><code class="bash">npm install hexo-cli -ghexo initnpm installhexo server</code></pre><h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>git上传插件</p><pre><code class="bash">npm install hexo-deployer-git --save</code></pre><h3 id="hexo基本操作"><a href="#hexo基本操作" class="headerlink" title="hexo基本操作"></a>hexo基本操作</h3><pre><code class="bash">hexo clean &amp;&amp; hexo g &amp;&amp; hexo shexo new &quot;My New Post&quot;hexo new post &quot;file&quot;</code></pre><h2 id="更换主题（3-hexo）修改主题配置"><a href="#更换主题（3-hexo）修改主题配置" class="headerlink" title="更换主题（3-hexo）修改主题配置"></a>更换主题（<a href="https://github.com/yelog/hexo-theme-3-hexo">3-hexo</a>）修改主题配置</h2><h2 id="上传到GithubPages内"><a href="#上传到GithubPages内" class="headerlink" title="上传到GithubPages内"></a>上传到GithubPages内</h2><h3 id="本机生成ssh"><a href="#本机生成ssh" class="headerlink" title="本机生成ssh"></a>本机生成ssh</h3><pre><code class="bash">ssh-keygen -t rsa -C &quot;email@github.com&quot; #github注册的邮箱</code></pre><p>将本机路径下C:\Users\本机路径名.ssh\id_rsa.pub 文件的内容放入Github -&gt;Setting -&gt; SSH and GPG keys内。</p><pre><code>hexo d</code></pre><p>发布项目，xxxxx.github.io 访问</p><h3 id="本地目录索引"><a href="#本地目录索引" class="headerlink" title="本地目录索引"></a>本地目录索引</h3><pre><code class="yml">- 读书- 开发知识  - IO  - JUC  - JVM  - 设计模式  - 数据结构  - 虚拟机- 大前端- 后端- 数据库- 运维- 问题集- 总结</code></pre>]]></content>
     
     
       
